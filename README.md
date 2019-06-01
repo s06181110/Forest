@@ -1,6 +1,11 @@
 # ソフトウェア工学II 長期課題
 
-## 開発について
-ブランチ名は実装する機能の名前、もしくはクラス名を**ロワースネークケース**
+## ブランチについて
+- developブランチにPRを投げる
+- developブランチから作業ブランチを生やす
+- ブランチ名は実装する機能名をつける(ロワースネークケース)
 
-**develop**ブランチにプルリク投げるようにしましょう
+## ドキュメント簡易アクセス
+- [日程](https://s06181110.github.io/Forest/Forest_Document/DevelopmentPlan/index.html)
+- [ガントチャート](https://s06181110.github.io/Forest/Forest_Document/src/Gantt_chart.png)
+- [設計](https://s06181110.github.io/Forest/Forest_Document/BasicDesign/index.html)
