@@ -32,14 +32,14 @@ public class ForestView extends View {
 	 * 
 	 */
 	public void paintComponent(Graphics aGraphics) {
-		int width = this.getWidth();
-		int height = this.getHeight();
+		String aString = this.toString();
+		int width = aString.length();
+		int height = 2;
 		int x = this.getX();
 		int y = this.getY();
-		String aString = this.toString();
 		aGraphics.drawRect(x, y, width, height);
 		aGraphics.drawString( aString, x,  y + height/2);
-		if(whichOfNodes(aGraphics) == null){ return; }
+		if(whichOfNodes(aPoint) == null){ return; }
 		aGraphics.drawLine(x, y, x, y);
 		return;
 	}
@@ -51,7 +51,7 @@ public class ForestView extends View {
 	 * 
 	 */
 	public Node whichOfNodes(Point aPoint) {
-		if(){ return; }
+		if(aPoint == ){ return aPoint; }
 		return null;
 	}
 
