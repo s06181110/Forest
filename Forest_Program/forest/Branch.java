@@ -45,6 +45,7 @@ public class Branch extends Object {
 		int x2 = (int)anEndPoint.getX();
 		int y2 = (int)anEndPoint.getY();
 		aGraphics.drawLine(x1, y1, x2, y2);
+		return;
 	}
 
 	/**
