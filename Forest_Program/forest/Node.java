@@ -190,6 +190,7 @@ public class Node extends Component {
 		aBuffer.append(this.extent);
 		aBuffer.append(",status=");
 		aBuffer.append(this.status);
+		aBuffer.append("]");
 		return aBuffer.toString();
 	}
 
