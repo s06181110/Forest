@@ -13,8 +13,8 @@ public class ForestController extends Controller {
 	 *  このクラスのインスタンスを生成するコンストラクタです。
 	 * 
 	 */
-	public ForestController() {
-
+	public ForestController() { //construct for Instance
+		ForestController forestController = new ForestController();
 	}
 
 	/**
@@ -23,8 +23,8 @@ public class ForestController extends Controller {
 	 *  @param aMouseEvent マウスイベント
 	 * 
 	 */
-	public void mouseClicked(MouseEvent aMouseEvent) {
-
+	public void mouseClicked(MouseEvent aMouseEvent) { //return:void
+		
 	}
 
 }
