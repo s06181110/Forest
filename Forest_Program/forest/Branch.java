@@ -77,7 +77,7 @@ public class Branch extends Object {
 		aBuffer.append(aClass.getName());
 		aBuffer.append("[start=");
 		aBuffer.append(this.start);
-		aBuffer.append("[end=");
+		aBuffer.append(",end=");
 		aBuffer.append(this.end);
 		aBuffer.append("]");
 		return aBuffer.toString();
