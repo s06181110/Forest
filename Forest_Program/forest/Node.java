@@ -1,9 +1,12 @@
 package forest;
 
 import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FontMetrics;
 import java.awt.Point;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import sun.font.FontDesignMetrics;
 
 /**
  *  樹状整列におけるノード（節）を担うクラスになります。
@@ -28,7 +31,7 @@ public class Node extends Component {
 	 *  ノードの大きさ（幅と高さ）を記憶するフィールドです。
 	 * 
 	 */
-	private Point extent;
+	private Dimension extent;
 
 	/**
 	 *  樹状整列する際のノードの状態を記憶するフィールドです。
@@ -42,7 +45,11 @@ public class Node extends Component {
 	 * 
 	 */
 	public Node(String aString) {
-
+		this.name = aString;
+		this.location = null;
+		this.extent = null;
+		this.status = null;
+		return;
 	}
 
 	/**
@@ -51,7 +58,11 @@ public class Node extends Component {
 	 * 
 	 */
 	public void draw(Graphics aGraphics) {
-
+		Point aPoint = this.location;
+		Dimension aDimension = this.extent;
+		aGraphics.drawRect(aPoint.x, aPoint.y, aDimension.width, aDimension.height);
+		aGraphics.drawString(name, this.location.x, this.location.y);
+		return;
 	}
 
 	/**
@@ -60,7 +71,8 @@ public class Node extends Component {
 	 * 
 	 */
 	public Rectangle getBounds() {
-		return null;
+		Rectangle aRectangle = new Rectangle(this.location, this.extent);
+		return aRectangle;
 	}
 
 	/**
@@ -68,8 +80,8 @@ public class Node extends Component {
 	 *  @return ノード（節）の大きさ（幅と高さ）
 	 * 
 	 */
-	public Point getExtent() {
-		return null;
+	public Dimension getExtent() {
+		return this.extent;
 	}
 
 	/**
@@ -78,7 +90,7 @@ public class Node extends Component {
 	 * 
 	 */
 	public Point getLocation() {
-		return null;
+		return this.location;
 	}
 
 	/**
@@ -87,7 +99,7 @@ public class Node extends Component {
 	 * 
 	 */
 	public String getName() {
-		return null;
+		return this.name;
 	}
 
 	/**
@@ -96,7 +108,7 @@ public class Node extends Component {
 	 * 
 	 */
 	public Integer getStatus() {
-		return null;
+		return this.status;
 	}
 
 	/**
@@ -104,8 +116,9 @@ public class Node extends Component {
 	 *  @param aPoint ノードの大きさ（幅と高さ）
 	 * 
 	 */
-	public void setExtent(Point aPoint) {
-
+	public void setExtent(Dimension aDimension) {
+		this.extent = aDimension;
+		return;
 	}
 
 	/**
@@ -114,7 +127,8 @@ public class Node extends Component {
 	 * 
 	 */
 	public void setLocation(Point aPoint) {
-
+		this.location = aPoint;
+		return;
 	}
 
 	/**
@@ -123,7 +137,8 @@ public class Node extends Component {
 	 * 
 	 */
 	public void setName(String aString) {
-
+		this.name = aString;
+		return;
 	}
 
 	/**
@@ -132,7 +147,8 @@ public class Node extends Component {
 	 * 
 	 */
 	public void setStatus(Integer anInteger) {
-
+		this.status = anInteger;
+		return;
 	}
 
 	/**
@@ -142,7 +158,8 @@ public class Node extends Component {
 	 * 
 	 */
 	protected int stringHeight(String string) {
-		return 0;
+		FontMetrics aFontMetrics = FontDesignMetrics.getMetrics(Constants.DefaultFont);
+		return aFontMetrics.getHeight();
 	}
 
 	/**
@@ -152,7 +169,8 @@ public class Node extends Component {
 	 * 
 	 */
 	protected int stringWidth(String string) {
-		return 0;
+		FontMetrics aFontMetrics = FontDesignMetrics.getMetrics(Constants.DefaultFont);
+		return aFontMetrics.stringWidth(this.name);
 	}
 
 	/**
@@ -161,7 +179,19 @@ public class Node extends Component {
 	 * 
 	 */
 	public String toString() {
-		return null;
+		StringBuffer aBuffer = new StringBuffer();
+		Class<?> aClass = this.getClass();
+		aBuffer.append(aClass.getName());
+		aBuffer.append("[name=");
+		aBuffer.append(this.name);
+		aBuffer.append(",location=");
+		aBuffer.append(this.location);
+		aBuffer.append(",extent=");
+		aBuffer.append(this.extent);
+		aBuffer.append(",status=");
+		aBuffer.append(this.status);
+		aBuffer.append("]");
+		return aBuffer.toString();
 	}
 
 }
