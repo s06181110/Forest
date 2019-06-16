@@ -17,7 +17,13 @@ public class ForestView extends View {
 	 * 
 	 */
 	public ForestView(ForestModel aModel) {
-
+		super();
+		this.model = aModel;
+		this.model.anime();
+		this.model.arrange();
+		this.model.root();
+		this.model.roots();
+		return;
 	}
 
 	/**
@@ -26,7 +32,16 @@ public class ForestView extends View {
 	 * 
 	 */
 	public void paintComponent(Graphics aGraphics) {
-
+		String aString = this.toString();
+		int width = aString.length();
+		int height = 2;
+		int x = this.getX();
+		int y = this.getY();
+		aGraphics.drawRect(x, y, width, height);
+		aGraphics.drawString( aString, x,  y + height/2);
+		if(whichOfNodes(aPoint) == null){ return; }
+		aGraphics.drawLine(x, y, x, y);
+		return;
 	}
 
 	/**
@@ -36,6 +51,7 @@ public class ForestView extends View {
 	 * 
 	 */
 	public Node whichOfNodes(Point aPoint) {
+		if(aPoint == ){ return aPoint; }
 		return null;
 	}
 
