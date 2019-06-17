@@ -6,7 +6,7 @@ import java.awt.FontMetrics;
 import java.awt.Point;
 import java.awt.Graphics;
 import java.awt.Rectangle;
-import sun.font.FontDesignMetrics;
+// import sun.font.FontDesignMetrics;
 
 /**
  *  樹状整列におけるノード（節）を担うクラスになります。
@@ -158,8 +158,9 @@ public class Node extends Component {
 	 * 
 	 */
 	protected int stringHeight(String string) {
-		FontMetrics aFontMetrics = FontDesignMetrics.getMetrics(Constants.DefaultFont);
-		return aFontMetrics.getHeight();
+		// FontMetrics aFontMetrics = FontDesignMetrics.getMetrics(Constants.DefaultFont);
+		// return aFontMetrics.getHeight();
+		return 0;
 	}
 
 	/**
@@ -169,8 +170,9 @@ public class Node extends Component {
 	 * 
 	 */
 	protected int stringWidth(String string) {
-		FontMetrics aFontMetrics = FontDesignMetrics.getMetrics(Constants.DefaultFont);
-		return aFontMetrics.stringWidth(this.name);
+		// FontMetrics aFontMetrics = FontDesignMetrics.getMetrics(Constants.DefaultFont);
+		// return aFontMetrics.stringWidth(this.name);
+		return 0;
 	}
 
 	/**
