@@ -1,6 +1,8 @@
 package forest;
 
 import mvc.View;
+
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 
@@ -17,12 +19,7 @@ public class ForestView extends View {
 	 * 
 	 */
 	public ForestView(ForestModel aModel) {
-		super(aModel);
-		// this.model = aModel;
-		// this.model.anime();
-		// this.model.arrange();
-		// this.model.root();
-		// this.model.roots();
+		super(aModel, new ForestController());
 		return;
 	}
 
@@ -32,7 +29,16 @@ public class ForestView extends View {
 	 * 
 	 */
 	public void paintComponent(Graphics aGraphics) {
-		super.paintComponent(aGraphics);
+		int width = super.getWidth();
+		int height = super.getHeight();
+		aGraphics.setFont(Constants.DefaultFont);
+		aGraphics.setColor(Color.white);
+		aGraphics.fillRect(0, 0, width, height);
+		ForestModel aModel = (ForestModel)super.model;
+		if (aModel == null) { return; }
+		Forest aForest = aModel.forest();
+		if (aForest == null) { return; }
+		aForest.draw(aGraphics);
 		return;
 	}
 
@@ -43,7 +49,7 @@ public class ForestView extends View {
 	 * 
 	 */
 	public Node whichOfNodes(Point aPoint) {
-		// if(aPoint == ){ return aPoint; }
+		System.out.printf("%s\n", aPoint);
 		return null;
 	}
 

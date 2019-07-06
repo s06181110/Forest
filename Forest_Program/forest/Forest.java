@@ -34,7 +34,10 @@ public class Forest extends Object {
 	 * 
 	 */
 	public Forest() {
-
+		this.nodes = new ArrayList<Node>();
+		this.branches = new ArrayList<Branch>();
+		this.bounds = null;
+		return;
 	}
 
 	/**
@@ -43,7 +46,8 @@ public class Forest extends Object {
 	 * 
 	 */
 	public void addBranch(Branch aBranch) {
-
+		this.branches.add(aBranch);
+		return;
 	}
 
 	/**
@@ -52,7 +56,8 @@ public class Forest extends Object {
 	 * 
 	 */
 	public void addNode(Node aNode) {
-
+		this.nodes.add(aNode);
+		return;
 	}
 
 	/**
@@ -99,7 +104,9 @@ public class Forest extends Object {
 	 * 
 	 */
 	public void draw(Graphics aGraphics) {
-
+		for(Node aNode: this.nodes){
+			aNode.draw(aGraphics);
+		}
 	}
 
 	/**
@@ -174,6 +181,7 @@ public class Forest extends Object {
 	 * 
 	 */
 	public Node whichOfNodes(Point aPoint) {
+		System.out.printf("%s\n", aPoint);
 		return null;
 	}
 
