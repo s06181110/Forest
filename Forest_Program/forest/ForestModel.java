@@ -1,12 +1,19 @@
 package forest;
 
 import mvc.Model;
+import java.awt.Point;
+
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.util.ArrayList;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.io.BufferedReader;
-import java.io.FileReader;
+// import java.io.FileReader;
+import java.io.IOException;
+import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
+
+import java.util.ArrayList;
+
 
 /**
  *  樹状整列におけるMVCのモデル（M）を担うクラスになります。
@@ -44,7 +51,8 @@ public class ForestModel extends Model {
 	 * 
 	 */
 	public void arrange() {
-
+		this.forest.arrange();
+		return;
 	}
 
 	/**
@@ -61,7 +69,7 @@ public class ForestModel extends Model {
 	 * 
 	 */
 	public Forest forest() {
-		return forest;
+		return this.forest;
 	}
 
 	/**
@@ -71,21 +79,26 @@ public class ForestModel extends Model {
 	 */
 	protected void read(File aFile) {
 		try {
-			BufferedReader reader = new BufferedReader(new FileReader(aFile));
+			FileInputStream inputStream = new FileInputStream(aFile);
+			InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
+			BufferedReader inputReader = new BufferedReader(inputStreamReader);
+			// BufferedReader reader = new BufferedReader(new FileReader(aFile));
 			String str;
 			Integer previousValue = null;
-			Integer processFlag = 0;
 			ArrayList<Node> nodeLists = new ArrayList<Node>();
 
-			while ((str = reader.readLine()) != null) {
+			Integer processFlag = 0; // [tag] tree:
+			while ((str = inputReader.readLine()) != null) {
 				String[] strList = str.split(" ");
-
 				//treesの処理。デバック用出力
-				if ( processFlag == 0 && strList[0].equals("|--") ) {
+				if ( processFlag == 0 ) {
 					//何もしない
 				}
-				else if ( processFlag == 1 && strList.length > 1) {
+				else if ( processFlag == 1 && strList.length > 1) { 
 					Node aNode = new Node(strList[strList.length - 1]);
+					// nodeの初期位置として
+					Point aPoint = new Point(0, 15*(Integer.valueOf(strList[0].replace(",", ""))-1));
+					aNode.setLocation(aPoint);
 					forest.addNode(aNode);
 					nodeLists.add(aNode);
 				}
@@ -99,13 +112,13 @@ public class ForestModel extends Model {
 				
 
 				switch ( str ) {
-					case "tree:":
+					case Constants.TagOfTrees:
 						processFlag = 0;
 						break;
-					case "nodes:":
+					case Constants.TagOfNodes:
 						processFlag = 1;
 						break;
-					case "branches:":
+					case Constants.TagOfBranches:
 						processFlag = 2;
 						break;
 					default:
@@ -114,9 +127,11 @@ public class ForestModel extends Model {
 			}
 
 
-		} catch(IOException e) {
-			e.printStackTrace();
 		}
+		catch(FileNotFoundException anException) { anException.printStackTrace(); }
+		catch(UnsupportedEncodingException anException) { anException.printStackTrace(); }
+		catch(IOException anException) { anException.printStackTrace(); }
+
 	}
 
 	/**

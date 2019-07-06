@@ -1,12 +1,13 @@
 package forest;
 
+import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.FontMetrics;
 import java.awt.Point;
+import java.awt.FontMetrics;
+// import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Rectangle;
-// import sun.font.FontDesignMetrics;
+import sun.font.FontDesignMetrics;
 
 /**
  *  樹状整列におけるノード（節）を担うクラスになります。
@@ -31,7 +32,7 @@ public class Node extends Component {
 	 *  ノードの大きさ（幅と高さ）を記憶するフィールドです。
 	 * 
 	 */
-	private Dimension extent;
+	private Point extent;
 
 	/**
 	 *  樹状整列する際のノードの状態を記憶するフィールドです。
@@ -47,8 +48,9 @@ public class Node extends Component {
 	public Node(String aString) {
 		this.name = aString;
 		this.location = null;
-		this.extent = null;
-		this.status = null;
+		Point aPoint = new Point(this.stringWidth(aString), this.stringHeight(aString));
+		this.setExtent(aPoint);;
+		this.status = Constants.UnKnown;
 		return;
 	}
 
@@ -59,9 +61,10 @@ public class Node extends Component {
 	 */
 	public void draw(Graphics aGraphics) {
 		Point aPoint = this.location;
-		Dimension aDimension = this.extent;
-		aGraphics.drawRect(aPoint.x, aPoint.y, aDimension.width, aDimension.height);
-		aGraphics.drawString(name, this.location.x, this.location.y);
+		Point aDimension = this.extent;
+		aGraphics.setColor(Color.black);
+		aGraphics.drawRect(aPoint.x, aPoint.y, aDimension.x, aDimension.y);
+		aGraphics.drawString(this.name, aPoint.x, aPoint.y);
 		return;
 	}
 
@@ -71,7 +74,7 @@ public class Node extends Component {
 	 * 
 	 */
 	public Rectangle getBounds() {
-		Rectangle aRectangle = new Rectangle(this.location, this.extent);
+		Rectangle aRectangle = new Rectangle(this.location.x, this.location.y, this.extent.x, this.extent.y);
 		return aRectangle;
 	}
 
@@ -80,7 +83,7 @@ public class Node extends Component {
 	 *  @return ノード（節）の大きさ（幅と高さ）
 	 * 
 	 */
-	public Dimension getExtent() {
+	public Point getExtent() {
 		return this.extent;
 	}
 
@@ -116,8 +119,8 @@ public class Node extends Component {
 	 *  @param aPoint ノードの大きさ（幅と高さ）
 	 * 
 	 */
-	public void setExtent(Dimension aDimension) {
-		this.extent = aDimension;
+	public void setExtent(Point aPoint) {
+		this.extent = aPoint;
 		return;
 	}
 
@@ -127,6 +130,7 @@ public class Node extends Component {
 	 * 
 	 */
 	public void setLocation(Point aPoint) {
+		aPoint.translate(Constants.Margin.x, Constants.Margin.y);
 		this.location = aPoint;
 		return;
 	}
@@ -158,9 +162,9 @@ public class Node extends Component {
 	 * 
 	 */
 	protected int stringHeight(String string) {
-		// FontMetrics aFontMetrics = FontDesignMetrics.getMetrics(Constants.DefaultFont);
-		// return aFontMetrics.getHeight();
-		return 0;
+		// FontMetrics aFontMetrics = new FontMetrics(Constants.DefaultFont){};
+		FontMetrics aFontMetrics = FontDesignMetrics.getMetrics(Constants.DefaultFont);
+		return aFontMetrics.getHeight()+Constants.Margin.y;
 	}
 
 	/**
@@ -170,9 +174,9 @@ public class Node extends Component {
 	 * 
 	 */
 	protected int stringWidth(String string) {
-		// FontMetrics aFontMetrics = FontDesignMetrics.getMetrics(Constants.DefaultFont);
-		// return aFontMetrics.stringWidth(this.name);
-		return 0;
+		// FontMetrics aFontMetrics = new FontMetrics(Constants.DefaultFont){};
+		FontMetrics aFontMetrics = FontDesignMetrics.getMetrics(Constants.DefaultFont);		
+		return aFontMetrics.stringWidth(string)+Constants.Margin.x;
 	}
 
 	/**
