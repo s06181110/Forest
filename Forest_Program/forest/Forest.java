@@ -95,6 +95,7 @@ public class Forest extends Object {
 	 * 
 	 */
 	public Rectangle bounds() {
+		Graphics aGraphics = 
 		return null;
 	}
 
