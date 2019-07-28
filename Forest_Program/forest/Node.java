@@ -173,6 +173,11 @@ public class Node extends Component implements Comparable<Node>{
 		return aFontMetrics.stringWidth(string);
 	}
 
+	@Override
+	public int compareTo(Node aNode) {
+		return this.name.compareTo(aNode.name);
+	}
+
 	/**
 	 *  自分自身を文字列に変換するメソッドです。
 	 *  @return 自分自身を表す文字列
@@ -193,5 +198,6 @@ public class Node extends Component implements Comparable<Node>{
 		aBuffer.append("]");
 		return aBuffer.toString();
 	}
+
 
 }
