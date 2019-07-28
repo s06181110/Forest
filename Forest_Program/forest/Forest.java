@@ -108,6 +108,9 @@ public class Forest extends Object {
 		for(Node aNode: this.nodes){
 			aNode.draw(aGraphics);
 		}
+		for(Branch aBranch: this.branches){
+			aBranch.draw(aGraphics);
+		}
 	}
 
 	/**

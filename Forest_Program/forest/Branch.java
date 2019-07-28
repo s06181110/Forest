@@ -1,5 +1,6 @@
 package forest;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 
@@ -39,11 +40,14 @@ public class Branch extends Object {
 	 */
 	public void draw(Graphics aGraphics) {
 		Point aFirstPoint = this.start.getLocation();
+		Dimension aDimension = this.start.getExtent();
+		int x1 = (int)aFirstPoint.getX()+aDimension.width;
+		int y1 = (int)aFirstPoint.getY()+aDimension.height/2;
 		Point anEndPoint = this.end.getLocation();
-		int x1 = (int)aFirstPoint.getX();
-		int y1 = (int)aFirstPoint.getY();
+		aDimension = this.end.getExtent();
 		int x2 = (int)anEndPoint.getX();
-		int y2 = (int)anEndPoint.getY();
+		int y2 = (int)anEndPoint.getY()+aDimension.height/2;
+		aGraphics.setColor(Constants.ForegroundColor);
 		aGraphics.drawLine(x1, y1, x2, y2);
 		return;
 	}
@@ -76,9 +80,9 @@ public class Branch extends Object {
 		Class<?> aClass = this.getClass();
 		aBuffer.append(aClass.getName());
 		aBuffer.append("[start=");
-		aBuffer.append(this.start);
+		aBuffer.append(this.start.getName());
 		aBuffer.append(",end=");
-		aBuffer.append(this.end);
+		aBuffer.append(this.end.getName());
 		aBuffer.append("]");
 		return aBuffer.toString();
 	}
