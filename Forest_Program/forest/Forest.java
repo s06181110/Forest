@@ -167,7 +167,12 @@ public class Forest extends Object {
 	 * 
 	 */
 	public ArrayList<Node> subNodes(Node aNode) {
-		return null;
+		ArrayList<Node> nodeList = new ArrayList<>();
+		for(Branch aBranch: this.branches){
+			//同じ名前のノードが出てきた時に対応できない
+			if(aBranch.start().equals(aNode)) nodeList.add(aBranch.end());
+		}
+		return nodeList;
 	}
 
 	/**
@@ -177,7 +182,12 @@ public class Forest extends Object {
 	 * 
 	 */
 	public ArrayList<Node> superNodes(Node aNode) {
-		return null;
+		ArrayList<Node> nodeList = new ArrayList<>();
+		for(Branch aBranch: this.branches){
+			//同じ名前のノードが出てきた時に対応できない
+			if(aBranch.end().equals(aNode)) nodeList.add(aBranch.start());
+		}
+		return nodeList;
 	}
 
 	/**
