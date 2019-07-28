@@ -136,7 +136,17 @@ public class Forest extends Object {
 	 * 
 	 */
 	public ArrayList<Node> rootNodes() {
-		return null;
+		ArrayList<Integer> endList = new ArrayList<>();
+		for(Branch aBranch: this.branches){
+			Integer anEndNumber = aBranch.end().getLocation().y/15;
+			endList.add(anEndNumber + 1);
+		}
+
+		ArrayList<Node> roots = new ArrayList<>();
+		for(Integer index = 1; index <= this.nodes.size(); index++){
+			if(!endList.contains(index)) roots.add(this.nodes.get(index-1));
+		}
+		return roots;
 	}
 
 	/**

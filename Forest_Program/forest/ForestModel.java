@@ -140,7 +140,7 @@ public class ForestModel extends Model {
 	 * 
 	 */
 	public Node root() {
-		return null;
+		return this.forest.rootNodes().get(0);
 	}
 
 	/**
@@ -149,7 +149,7 @@ public class ForestModel extends Model {
 	 * 
 	 */
 	public ArrayList<Node> roots() {
-		return forest.rootNodes();
+		return this.forest.rootNodes();
 	}
 
 }
