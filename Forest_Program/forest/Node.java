@@ -12,7 +12,7 @@ import java.awt.Rectangle;
  * 
  */
 @SuppressWarnings("serial")
-public class Node extends Component {
+public class Node extends Component implements Comparable<Node>{
 
 	/**
 	 *  ノード名：ラベル文字列を記憶するフィールドです。
