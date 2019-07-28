@@ -146,7 +146,8 @@ public class Forest extends Object {
 	 * 
 	 */
 	protected ArrayList<Node> sortNodes(ArrayList<Node> nodeCollection) {
-		return null;
+		Collections.sort(nodeCollection);
+		return nodeCollection;
 	}
 
 	/**
