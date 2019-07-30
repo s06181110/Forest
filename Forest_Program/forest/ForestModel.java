@@ -43,15 +43,16 @@ public class ForestModel extends Model {
 	 * 
 	 */
 	public void animate() {
-
+		// this.arrange();
+		// this.changed();
 	}
 
 	/**
 	 *  樹状整列を行うメソッドです。
-	 * 
+	 *  
 	 */
 	public void arrange() {
-		this.forest.arrange();
+		this.forest.arrange(this);
 		return;
 	}
 

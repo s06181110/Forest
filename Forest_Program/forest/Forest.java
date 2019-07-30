@@ -1,6 +1,7 @@
 package forest;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.awt.Rectangle;
 import java.awt.Point;
 import java.awt.Graphics;
@@ -95,8 +96,7 @@ public class Forest extends Object {
 	 * 
 	 */
 	public Rectangle bounds() {
-		Graphics aGraphics = 
-		return null;
+		return this.bounds;
 	}
 
 	/**
@@ -118,7 +118,7 @@ public class Forest extends Object {
 	 * 
 	 */
 	public void flushBounds() {
-
+		this.bounds = null;
 	}
 
 	/**
@@ -127,7 +127,10 @@ public class Forest extends Object {
 	 * 
 	 */
 	protected void propagate(ForestModel aModel) {
-
+		try {
+			aModel.changed();
+			Thread.sleep(Constants.SleepTick);
+		} catch (Exception anException) { anException.printStackTrace(); }
 	}
 
 	/**
