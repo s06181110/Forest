@@ -6,6 +6,7 @@ import java.awt.Point;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.util.function.BiConsumer;
 
 /**
  *  樹状整列におけるノード（節）を担うクラスになります。
@@ -30,7 +31,7 @@ public class Node extends Component implements Comparable<Node>{
 	 *  ノードの大きさ（幅と高さ）を記憶するフィールドです。
 	 * 
 	 */
-	private Point extent;
+	private Dimension extent;
 
 	/**
 	 *  樹状整列する際のノードの状態を記憶するフィールドです。
@@ -47,8 +48,9 @@ public class Node extends Component implements Comparable<Node>{
 		super();
 		this.setName(aString);
 		this.setLocation(new Point());
-		Point aPoint = new Point(this.stringWidth(aString), this.stringHeight(aString));
-		this.setExtent(aPoint);
+		Integer width = this.stringWidth(this.name);
+		Integer height = this.stringHeight(this.name);
+		this.setExtent(new Dimension(width, height));
 		this.setStatus(Constants.UnKnown);
 		return;
 	}
@@ -60,8 +62,9 @@ public class Node extends Component implements Comparable<Node>{
 	 */
 	public void draw(Graphics aGraphics) {
 		aGraphics.setColor(Constants.ForegroundColor);
+		aGraphics.drawRect(this.location.x, this.location.y, this.extent.width+Constants.Margin.x, this.extent.height+Constants.Margin.y);
+		aGraphics.setFont(Constants.DefaultFont);
 		FontMetrics aFontMetrics = aGraphics.getFontMetrics();
-		aGraphics.drawRect(this.location.x, this.location.y, this.extent.x+Constants.Margin.x, this.extent.y+Constants.Margin.y);
 		aGraphics.drawString(this.name, this.location.x+Constants.Margin.x/2, this.location.y + Constants.Margin.y + aFontMetrics.getAscent());
 		return;
 	}
@@ -72,7 +75,7 @@ public class Node extends Component implements Comparable<Node>{
 	 * 
 	 */
 	public Rectangle getBounds() {
-		Rectangle aRectangle = new Rectangle(this.location.x, this.location.y, this.extent.x, this.extent.y);
+		Rectangle aRectangle = new Rectangle(this.location, this.extent);
 		return aRectangle;
 	}
 
@@ -81,7 +84,7 @@ public class Node extends Component implements Comparable<Node>{
 	 *  @return ノード（節）の大きさ（幅と高さ）
 	 * 
 	 */
-	public Point getExtent() {
+	public Dimension getExtent() {
 		return this.extent;
 	}
 
@@ -117,8 +120,8 @@ public class Node extends Component implements Comparable<Node>{
 	 *  @param aPoint ノードの大きさ（幅と高さ）
 	 * 
 	 */
-	public void setExtent(Point aPoint) {
-		this.extent = aPoint;
+	public void setExtent(Dimension aDimension) {
+		this.extent = aDimension;
 		return;
 	}
 

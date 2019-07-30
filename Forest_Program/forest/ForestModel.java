@@ -76,6 +76,7 @@ public class ForestModel extends Model {
 		this.picture(new BufferedImage(aRectangle.width, aRectangle.height, BufferedImage.TYPE_INT_RGB));
 
 		Graphics aGraphics = this.picture().createGraphics();
+
 		aGraphics.setColor(Constants.BackgroundColor);
 		aGraphics.fillRect(0, 0, aRectangle.width, aRectangle.height);
 
@@ -122,8 +123,6 @@ public class ForestModel extends Model {
 				else if ( processFlag == 1 && strList.length > 1) { 
 					Node aNode = new Node(strList[strList.length - 1]);
 					// nodeの初期位置として
-					Point aPoint = new Point(0, 15*(Integer.valueOf(strList[0].replace(",", ""))-1));
-					aNode.setLocation(aPoint);
 					forest.addNode(aNode);
 					nodeLists.add(aNode);
 				}

@@ -29,20 +29,16 @@ public class ForestView extends View {
 	 * 
 	 */
 	public void paintComponent(Graphics aGraphics) {
-		int width = super.getWidth();
-		int height = super.getHeight();
+		int width = this.getWidth();
+		int height = this.getHeight();
 
+		aGraphics.setFont(Constants.DefaultFont);
 		aGraphics.setColor(Constants.BackgroundColor);
 		aGraphics.fillRect(0, 0, width, height);
 		ForestModel aModel = (ForestModel)this.model;
-		if (aModel == null) { return; }
-		// Forest aForest = aModel.forest();
-		BufferedImage picture = this.model.picture();
-		if(this.model == null) return;
-		Integer x = 0 - this.scrollAmount().x;
-		Integer y = 0 - this.scrollAmount().y;
-		// if (aForest == null) { return; }
-		aGraphics.drawImage(picture, x, y, null);
+		Forest aForest = aModel.forest();
+		aForest.draw(aGraphics);
+
 		return;
 	}
 
@@ -53,8 +49,11 @@ public class ForestView extends View {
 	 * 
 	 */
 	public Node whichOfNodes(Point aPoint) {
-		System.out.printf("%s\n", aPoint);
-		return null;
+		Integer x = aPoint.x - this.scrollAmount().x;
+		Integer y = aPoint.y - this.scrollAmount().y;
+		ForestModel aModel = (ForestModel)this.model;
+		Node aNode = aModel.forest().whichOfNodes(new Point(x, y));
+		return aNode;
 	}
 
 }

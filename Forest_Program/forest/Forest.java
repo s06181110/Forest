@@ -3,6 +3,7 @@ package forest;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.function.BiConsumer;
 import java.awt.Rectangle;
 import java.awt.Point;
 import java.awt.Dimension;
@@ -80,23 +81,35 @@ public class Forest extends Object {
 	 * 
 	 */
 	public void arrange(ForestModel aModel) {
-		Integer fontHeight = Constants.DefaultFont.getSize();
-		Integer yValue = fontHeight + (Constants.Margin.y * 2) + Constants.Interval.y;
+		// Integer fontHeight = Constants.DefaultFont.getSize();
+		// Integer yValue = fontHeight + (Constants.Margin.y * 2) + Constants.Interval.y;
 
-		Iterator<Node> anIterator = this.nodes.iterator();
-		for(Integer anIndex = 0; anIterator.hasNext(); anIndex++) {
-			Node aNode = anIterator.next();
+		// Iterator<Node> anIterator = this.nodes.iterator();
+		// for(Integer anIndex = 0; anIterator.hasNext(); anIndex++) {
+		// 	Node aNode = anIterator.next();
+		// 	aNode.setStatus(Constants.UnVisited);
+		// 	aNode.setLocation(new Point(0, anIndex * yValue));
+		// }
+
+		Integer counter = 0;
+		for(Node aNode: this.nodes){
+			// Integer height = (aNode.getExtent().height * counter++);
 			aNode.setStatus(Constants.UnVisited);
-			aNode.setLocation(new Point(0, anIndex * yValue));
+			aNode.setLocation(new Point(0, 15*counter++));
 		}
+		// BiConsumer<Node, Integer> aBiConsumer = (Node aNode, Integer anIndex) -> {
+		// 	Integer height = aNode.getHeight() * anIndex;
+		// 	aNode.setStatus(Constants.UnVisited);
+		// 	aNode.setLocation(new Point(0, height));
+		// };
+		// Integer index = 0;
+		// this.nodes.forEachWithIndex(aBiConsumer);
 
 		Point aPoint = new Point(0, 0);
 		ArrayList<Node> rootNodes = this.rootNodes();
-		anIterator = rootNodes.iterator();
-		while (anIterator.hasNext()) {
-			Node aNode = anIterator.next();
-			aPoint = this.arrange(aNode, aPoint, aModel);
-			aPoint = new Point(0, aPoint.y  + Constants.Interval.y);
+		for(Node aNode: rootNodes){
+			Dimension aDimension = this.arrange(aNode, aPoint, aModel);
+			aPoint = new Point(0, aDimension.height  + Constants.Interval.y);
 		}
 
 		this.flushBounds();
@@ -113,22 +126,22 @@ public class Forest extends Object {
 	 *  @return 樹状整列に必要だった大きさ（幅と高さ）
 	 * 
 	 */
-	protected Point arrange(Node aNode, Point aPoint, ForestModel aModel) {
+	protected Dimension arrange(Node aNode, Point aPoint, ForestModel aModel) {
 		aNode.setStatus(Constants.Visited);
 		aNode.setLocation(aPoint);
 		this.propagate(aModel);
 
-		Point extent = aNode.getExtent();
+		Dimension extent = aNode.getExtent();
 		ArrayList<Node> subNodes = this.subNodes(aNode);
 		if (subNodes.size() <= 0) {
-			Integer width = aPoint.x + extent.x;
-			Integer height = aPoint.y + extent.y;
-			extent = new Point(width, height);
+			Integer width = aPoint.x + extent.width;
+			Integer height = aPoint.y + extent.height;
+			extent = new Dimension(width, height);
 
-			return(extent);
+			return extent;
 		}
 
-		Integer width = aPoint.x + extent.x;
+		Integer width = aPoint.x + extent.width;
 		Integer height = aPoint.y;
 		Integer x = width + Constants.Interval.x;
 		Integer y = height;
@@ -139,23 +152,23 @@ public class Forest extends Object {
 			Node subNode = anIterator.next();
 			if (subNode.getStatus() == Constants.UnVisited) {
 				extent = this.arrange(subNode, new Point(x, y), aModel);
-				Integer h = y + subNode.getExtent().y;
-				y = extent.y > h ? extent.y : h;
-				width = extent.x > width ? extent.x : width;
-				height = extent.y > height ? extent.y : height;
+				Integer h = y + subNode.getExtent().height;
+				y = extent.height > h ? extent.height : h;
+				width = extent.width> width ? extent.width : width;
+				height = extent.height > height ? extent.height : height;
 				y = y + Constants.Interval.y;
 			}
 		}
 
 		y = y - Constants.Interval.y;
-		Integer h = aNode.getExtent().y;
+		Integer h = aNode.getExtent().height;
 		if (y > (aPoint.y + h)) {
 			y = top + ((y - top - h) / 2);
 			aNode.setLocation(new Point(aPoint.x, y));
 			this.propagate(aModel);
 		}
 		height = height > h ? height : h;
-		extent = new Point(width, height);
+		extent = new Dimension(width, height);
 
 		return extent;
 	}
@@ -209,9 +222,11 @@ public class Forest extends Object {
 				aModel.changed();
 				Thread.sleep(Constants.SleepTick);
 			} catch (Exception anException) { anException.printStackTrace(); }
+			this.flushBounds();
+			aModel.changed();
 		}
-		this.flushBounds();
-		aModel.changed();
+		
+		return;
 	}
 
 	/**
