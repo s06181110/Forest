@@ -95,8 +95,8 @@ public class Forest extends Object {
 		anIterator = rootNodes.iterator();
 		while (anIterator.hasNext()) {
 			Node aNode = anIterator.next();
-			Dimension aDimension = this.arrange(aNode, aPoint, aModel);
-			aPoint = new Point(0, aDimension.height  + Constants.Interval.y);
+			aPoint = this.arrange(aNode, aPoint, aModel);
+			aPoint = new Point(0, aPoint.y  + Constants.Interval.y);
 		}
 
 		this.flushBounds();
@@ -113,22 +113,22 @@ public class Forest extends Object {
 	 *  @return 樹状整列に必要だった大きさ（幅と高さ）
 	 * 
 	 */
-	protected Dimension arrange(Node aNode, Point aPoint, ForestModel aModel) {
+	protected Point arrange(Node aNode, Point aPoint, ForestModel aModel) {
 		aNode.setStatus(Constants.Visited);
 		aNode.setLocation(aPoint);
 		this.propagate(aModel);
 
-		Dimension extent = aNode.getExtent();
+		Point extent = aNode.getExtent();
 		ArrayList<Node> subNodes = this.subNodes(aNode);
 		if (subNodes.size() <= 0) {
-			Integer width = aPoint.x + extent.width;
-			Integer height = aPoint.y + extent.height;
-			extent = new Dimension(width, height);
+			Integer width = aPoint.x + extent.x;
+			Integer height = aPoint.y + extent.y;
+			extent = new Point(width, height);
 
 			return(extent);
 		}
 
-		Integer width = aPoint.x + extent.width;
+		Integer width = aPoint.x + extent.x;
 		Integer height = aPoint.y;
 		Integer x = width + Constants.Interval.x;
 		Integer y = height;
@@ -139,23 +139,23 @@ public class Forest extends Object {
 			Node subNode = anIterator.next();
 			if (subNode.getStatus() == Constants.UnVisited) {
 				extent = this.arrange(subNode, new Point(x, y), aModel);
-				Integer h = y + subNode.getExtent().height;
-				y = extent.height > h ? extent.height : h;
-				width = extent.width > width ? extent.width : width;
-				height = extent.height > height ? extent.height : height;
+				Integer h = y + subNode.getExtent().y;
+				y = extent.y > h ? extent.y : h;
+				width = extent.x > width ? extent.x : width;
+				height = extent.y > height ? extent.y : height;
 				y = y + Constants.Interval.y;
 			}
 		}
 
 		y = y - Constants.Interval.y;
-		Integer h = aNode.getExtent().height;
+		Integer h = aNode.getExtent().y;
 		if (y > (aPoint.y + h)) {
 			y = top + ((y - top - h) / 2);
 			aNode.setLocation(new Point(aPoint.x, y));
 			this.propagate(aModel);
 		}
 		height = height > h ? height : h;
-		extent = new Dimension(width, height);
+		extent = new Point(width, height);
 
 		return extent;
 	}

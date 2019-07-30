@@ -32,7 +32,7 @@ public class ForestController extends Controller {
 		Point aPoint = aMouseEvent.getPoint();
 		ForestView aView = (ForestView)super.view;
 		Node aNode = aView.whichOfNodes(aPoint);
-		if(aNode != null) System.out.println(aNode);
+		if(aNode != null) System.out.println(aNode.getName());
 		return;
 	}
 }

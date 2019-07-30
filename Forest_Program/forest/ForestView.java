@@ -2,9 +2,9 @@ package forest;
 
 import mvc.View;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
 
 /**
  *  樹状整列におけるMVCのビュー（V）を担うクラスになります。
@@ -31,14 +31,18 @@ public class ForestView extends View {
 	public void paintComponent(Graphics aGraphics) {
 		int width = super.getWidth();
 		int height = super.getHeight();
-		aGraphics.setFont(Constants.DefaultFont);
-		aGraphics.setColor(Color.white);
+
+		aGraphics.setColor(Constants.BackgroundColor);
 		aGraphics.fillRect(0, 0, width, height);
-		ForestModel aModel = (ForestModel)super.model;
+		ForestModel aModel = (ForestModel)this.model;
 		if (aModel == null) { return; }
-		Forest aForest = aModel.forest();
-		if (aForest == null) { return; }
-		aForest.draw(aGraphics);
+		// Forest aForest = aModel.forest();
+		BufferedImage picture = this.model.picture();
+		if(this.model == null) return;
+		Integer x = 0 - this.scrollAmount().x;
+		Integer y = 0 - this.scrollAmount().y;
+		// if (aForest == null) { return; }
+		aGraphics.drawImage(picture, x, y, null);
 		return;
 	}
 

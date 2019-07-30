@@ -30,7 +30,7 @@ public class Node extends Component implements Comparable<Node>{
 	 *  ノードの大きさ（幅と高さ）を記憶するフィールドです。
 	 * 
 	 */
-	private Dimension extent;
+	private Point extent;
 
 	/**
 	 *  樹状整列する際のノードの状態を記憶するフィールドです。
@@ -44,11 +44,12 @@ public class Node extends Component implements Comparable<Node>{
 	 * 
 	 */
 	public Node(String aString) {
-		this.name = aString;
-		this.location = new Point();
-		Dimension aDimension = new Dimension(this.stringWidth(aString), this.stringHeight(aString));
-		this.setExtent(aDimension);;
-		this.status = Constants.UnKnown;
+		super();
+		this.setName(aString);
+		this.setLocation(new Point());
+		Point aPoint = new Point(this.stringWidth(aString), this.stringHeight(aString));
+		this.setExtent(aPoint);
+		this.setStatus(Constants.UnKnown);
 		return;
 	}
 
@@ -60,7 +61,7 @@ public class Node extends Component implements Comparable<Node>{
 	public void draw(Graphics aGraphics) {
 		aGraphics.setColor(Constants.ForegroundColor);
 		FontMetrics aFontMetrics = aGraphics.getFontMetrics();
-		aGraphics.drawRect(this.location.x, this.location.y, this.extent.width+Constants.Margin.x, this.extent.height+Constants.Margin.y);
+		aGraphics.drawRect(this.location.x, this.location.y, this.extent.x+Constants.Margin.x, this.extent.y+Constants.Margin.y);
 		aGraphics.drawString(this.name, this.location.x+Constants.Margin.x/2, this.location.y + Constants.Margin.y + aFontMetrics.getAscent());
 		return;
 	}
@@ -71,7 +72,7 @@ public class Node extends Component implements Comparable<Node>{
 	 * 
 	 */
 	public Rectangle getBounds() {
-		Rectangle aRectangle = new Rectangle(this.location, this.extent);
+		Rectangle aRectangle = new Rectangle(this.location.x, this.location.y, this.extent.x, this.extent.y);
 		return aRectangle;
 	}
 
@@ -80,7 +81,7 @@ public class Node extends Component implements Comparable<Node>{
 	 *  @return ノード（節）の大きさ（幅と高さ）
 	 * 
 	 */
-	public Dimension getExtent() {
+	public Point getExtent() {
 		return this.extent;
 	}
 
@@ -116,8 +117,8 @@ public class Node extends Component implements Comparable<Node>{
 	 *  @param aPoint ノードの大きさ（幅と高さ）
 	 * 
 	 */
-	public void setExtent(Dimension aDimension) {
-		this.extent = aDimension;
+	public void setExtent(Point aPoint) {
+		this.extent = aPoint;
 		return;
 	}
 

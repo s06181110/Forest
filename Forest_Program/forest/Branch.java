@@ -40,13 +40,13 @@ public class Branch extends Object {
 	 */
 	public void draw(Graphics aGraphics) {
 		Point aFirstPoint = this.start.getLocation();
-		Dimension aDimension = this.start.getExtent();
-		int x1 = (int)aFirstPoint.getX()+aDimension.width;
-		int y1 = (int)aFirstPoint.getY()+aDimension.height/2;
+		Point aPoint = this.start.getExtent();
+		int x1 = (int)aFirstPoint.getX()+aPoint.x;
+		int y1 = (int)aFirstPoint.getY()+aPoint.y/2;
 		Point anEndPoint = this.end.getLocation();
-		aDimension = this.end.getExtent();
+		aPoint = this.end.getExtent();
 		int x2 = (int)anEndPoint.getX();
-		int y2 = (int)anEndPoint.getY()+aDimension.height/2;
+		int y2 = (int)anEndPoint.getY()+aPoint.y/2;
 		aGraphics.setColor(Constants.ForegroundColor);
 		aGraphics.drawLine(x1, y1, x2, y2);
 		return;
