@@ -1,13 +1,17 @@
 package forest;
 
 import mvc.Model;
-import java.awt.Point;
+import mvc.View;
 
+import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
-// import java.io.FileReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
@@ -36,6 +40,9 @@ public class ForestModel extends Model {
 		super();
 		this.forest = new Forest();
 		this.read(aFile);
+		this.arrange();
+
+		return;
 	}
 
 	/**
@@ -43,8 +50,10 @@ public class ForestModel extends Model {
 	 * 
 	 */
 	public void animate() {
-		// this.arrange();
-		// this.changed();
+		this.forest.arrange(this);
+		this.changed();
+
+		return;
 	}
 
 	/**
@@ -52,7 +61,9 @@ public class ForestModel extends Model {
 	 *  
 	 */
 	public void arrange() {
-		this.forest.arrange(this);
+		this.forest.arrange();
+		this.changed();
+
 		return;
 	}
 
@@ -61,7 +72,20 @@ public class ForestModel extends Model {
 	 * 
 	 */
 	public void changed() {
-		super.changed();
+		Rectangle aRectangle = this.forest.bounds();
+		this.picture(new BufferedImage(aRectangle.width, aRectangle.height, BufferedImage.TYPE_INT_RGB));
+
+		Graphics aGraphics = this.picture().createGraphics();
+		aGraphics.setColor(Constants.BackgroundColor);
+		aGraphics.fillRect(0, 0, aRectangle.width, aRectangle.height);
+
+		this.forest.draw(aGraphics);
+
+		for(View aView: this.dependents){
+			aView.update();
+		}
+
+		return;
 	}
 
 	/**
@@ -80,10 +104,10 @@ public class ForestModel extends Model {
 	 */
 	protected void read(File aFile) {
 		try {
-			FileInputStream inputStream = new FileInputStream(aFile);
-			InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
-			BufferedReader inputReader = new BufferedReader(inputStreamReader);
-			// BufferedReader reader = new BufferedReader(new FileReader(aFile));
+			// FileInputStream inputStream = new FileInputStream(aFile);
+			// InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
+			// BufferedReader inputReader = new BufferedReader(inputStreamReader);
+			BufferedReader inputReader = new BufferedReader(new FileReader(aFile));
 			String str;
 			Integer previousValue = null;
 			ArrayList<Node> nodeLists = new ArrayList<Node>();
@@ -126,6 +150,7 @@ public class ForestModel extends Model {
 						break;
 				}
 			}
+			inputReader.close();
 
 
 		}
@@ -141,7 +166,8 @@ public class ForestModel extends Model {
 	 * 
 	 */
 	public Node root() {
-		return this.forest.rootNodes().get(0);
+		ArrayList<Node> roots = this.roots();
+		return roots.size() > 0 ? roots.get(0) : null;
 	}
 
 	/**
