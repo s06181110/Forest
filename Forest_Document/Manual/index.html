@@ -46,9 +46,17 @@ div.belt-blue {
   background-color : #ddeeff;
   padding : 0px 4px;
 }
+div.belt-yellow {
+  background-color : #f7fccb;
+  padding : 0px 4px;
+}
 div.right-small {
   text-align : right;
   font-size : 8pt;
+}
+/* add like Tab */
+div.left-tab{
+  margin-left: 2%;
 }
 img.border {
   border-width : 1px;
@@ -249,7 +257,51 @@ th {
 <hr>
 <h2>ソフトウェア工学II「樹状整列」マニュアル</h2>
 <div class="belt">
-<h3><a name="KanseiSaseteKudasai">完成させてください</a></h3>
+<h3><a name="KanseiSaseteKudasai">インストール方法</a></h3>
+</div>
+<div class="left-tab">
+  <p>1. <a href="https://github.com/s06181110/Forest">Forest(GitHub)</a>にアクセスし、中央右のClone or downloadをで(a)cloneか(b)download zipを選択する。</p>
+  <div class="belt-yellow">
+    <p>以下はディレクトリを作成するが、任意のディレクトリに持ってきたい場合は、</p>
+    <p>$ mkdir -p ~/SE_long_term_hw</p>
+    <p>の部分を</p>
+    <p>$ cd (任意のディレクトリ)</p>
+    <p>に書き換えてコマンドを実行してください。</p>
+  </div>
+  <p>2-a. Gitからcloneする場合、ディレクトリを作成し、以下のコマンドを実行する。</p>
+  <div class="belt-blue left-tab">
+    <p>$ mkdir -p ~/SE_long_term_hw && git clone https://github.com/s06181110/Forest</p>
+  </div>
+  <p>2-b. zipを解凍する場合、ディレクトリを作成し、以下のコマンドを実行する。</p>
+  <div class="belt-blue left-tab">
+    <p>$ mkdir -p ~/SE_long_term_hw && unzip Forest-master.zip</p>
+  </div>
+  <p>3. clone又はdownloadしたディレクトリへ移動する。</p>
+  <div class="left-tab">
+    <p class="belt-blue">$ cd ~/SE_long_term_hw</p>
+    <p>又は</p>
+    <p class="belt-blue">$ cd (任意のディレクトリ)</p>
+  </div>
+  <p>4. 中身の確認。</p>
+  <div class="belt-blue left-tab">
+    <p>ls -l</p>
+  </div>
+  <p>5. makeする。</p>
+  <div class="belt-blue left-tab">
+    <p>$ make</p>
+  </div>
+</div>
+<div class="belt">
+<h3><a name="KanseiSaseteKudasai">インストール方法</a></h3>
+</div>
+<div class="left-tab">
+  <p>実行するためのコマンドは以下の通りである。</p>
+  <div class="left-tab">
+    <p class="belt-blue">$ java -jar forest.jar</p>
+  </div>
+  <p>Mac OS Xの場合はアプリケーション形式をクリックする方が簡易である。</p>
+
+  <p>以下に実行例を示す。</p>
 </div>
 <hr>
 <div class="right-small">Copyright 2019 Project xx, Updated: 2017/03/13 (Created: 2009/11/11)</div>
