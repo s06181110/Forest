@@ -2,8 +2,6 @@ package forest;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
-import java.util.function.BiConsumer;
 import java.awt.Rectangle;
 import java.awt.Point;
 import java.awt.Dimension;
@@ -116,7 +114,7 @@ public class Forest extends Object {
 
 		Dimension extent = aNode.getExtent();
 		ArrayList<Node> subNodes = this.subNodes(aNode);
-		if (subNodes.size() <= 0) {
+		if (subNodes.isEmpty()) {
 			Integer width = aPoint.x + extent.width;
 			Integer height = aPoint.y + extent.height;
 			extent = new Dimension(width, height);
@@ -161,9 +159,8 @@ public class Forest extends Object {
 	 */
 	public Rectangle bounds() {
 		if (this.bounds == null) this.bounds = new Rectangle();
-		for(Node aNode: this.nodes){
-			this.bounds.add(aNode.getBounds());
-		}
+		this.nodes.forEach(aNode -> this.bounds.add(aNode.getBounds()));
+
 		return this.bounds;
 	}
 
@@ -173,12 +170,8 @@ public class Forest extends Object {
 	 * 
 	 */
 	public void draw(Graphics aGraphics) {
-		for(Branch aBranch: this.branches){
-			aBranch.draw(aGraphics);
-		}
-		for(Node aNode: this.nodes){
-			aNode.draw(aGraphics);
-		}
+		this.branches.forEach( aBranch -> aBranch.draw(aGraphics) );
+		this.nodes.forEach( aNode -> aNode.draw(aGraphics) );
 	}
 
 	/**
@@ -213,16 +206,15 @@ public class Forest extends Object {
 	 * 
 	 */
 	public ArrayList<Node> rootNodes() {
+		// ルートノード以外の集合を集める
 		ArrayList<Node> endList = new ArrayList<>();
-		for(Branch aBranch: this.branches){
-			Node anEndNode = aBranch.end();
-			endList.add(anEndNode);
-		}
+		this.branches.forEach(aBranch -> endList.add(aBranch.end()));
 
 		ArrayList<Node> roots = new ArrayList<>();
-		for(Node aNode: this.nodes){
-			if(!endList.contains(aNode)) roots.add(aNode);
-		}
+		this.nodes.stream()
+			.filter(aNode -> !endList.contains(aNode))
+			.forEach(roots::add);
+
 		return roots;
 	}
 
@@ -248,6 +240,7 @@ public class Forest extends Object {
 		for(Branch aBranch: this.branches){
 			if(aBranch.start().equals(aNode)) nodeList.add(aBranch.end());
 		}
+
 		return nodeList;
 	}
 
