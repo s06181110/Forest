@@ -81,6 +81,6 @@ public class Constants extends Object {
 	 *  樹状整列アニメーションのチックタック：時間間隔：スピードを表します。
 	 * 
 	 */
-	public static final Integer SleepTick = 100;
+	public static final Integer SleepTick = 30;
 
 }
