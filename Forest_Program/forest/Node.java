@@ -6,7 +6,6 @@ import java.awt.Point;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Rectangle;
-import java.util.function.BiConsumer;
 
 /**
  *  樹状整列におけるノード（節）を担うクラスになります。
@@ -48,8 +47,8 @@ public class Node extends Component implements Comparable<Node>{
 		super();
 		this.setName(aString);
 		this.setLocation(new Point());
-		Integer width = this.stringWidth(this.name);
-		Integer height = this.stringHeight(this.name);
+		Integer width = this.stringWidth(this.name) + (2*Constants.Margin.x);
+		Integer height = this.stringHeight(this.name) + (2*Constants.Margin.y);
 		this.setExtent(new Dimension(width, height));
 		this.setStatus(Constants.UnKnown);
 		return;
@@ -62,10 +61,10 @@ public class Node extends Component implements Comparable<Node>{
 	 */
 	public void draw(Graphics aGraphics) {
 		aGraphics.setColor(Constants.ForegroundColor);
-		aGraphics.drawRect(this.location.x, this.location.y, this.extent.width+Constants.Margin.x, this.extent.height+Constants.Margin.y);
+		aGraphics.drawRect(this.location.x, this.location.y, this.extent.width-1, this.extent.height-1);
 		aGraphics.setFont(Constants.DefaultFont);
 		FontMetrics aFontMetrics = aGraphics.getFontMetrics();
-		aGraphics.drawString(this.name, this.location.x+Constants.Margin.x/2, this.location.y + Constants.Margin.y + aFontMetrics.getAscent());
+		aGraphics.drawString(this.name, this.location.x+Constants.Margin.x, this.location.y + Constants.Margin.y + aFontMetrics.getAscent());
 		return;
 	}
 
@@ -162,7 +161,7 @@ public class Node extends Component implements Comparable<Node>{
 	 * 
 	 */
 	protected int stringHeight(String string) {
-		FontMetrics aFontMetrics = super.getFontMetrics(Constants.DefaultFont);
+		FontMetrics aFontMetrics = this.getFontMetrics(Constants.DefaultFont);
 		return aFontMetrics.getHeight();
 	}
 
@@ -173,7 +172,7 @@ public class Node extends Component implements Comparable<Node>{
 	 * 
 	 */
 	protected int stringWidth(String string) {
-		FontMetrics aFontMetrics = super.getFontMetrics(Constants.DefaultFont);
+		FontMetrics aFontMetrics = this.getFontMetrics(Constants.DefaultFont);
 		return aFontMetrics.stringWidth(string);
 	}
 
