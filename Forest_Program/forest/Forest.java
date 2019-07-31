@@ -81,29 +81,12 @@ public class Forest extends Object {
 	 * 
 	 */
 	public void arrange(ForestModel aModel) {
-		// Integer fontHeight = Constants.DefaultFont.getSize();
-		// Integer yValue = fontHeight + (Constants.Margin.y * 2) + Constants.Interval.y;
-
-		// Iterator<Node> anIterator = this.nodes.iterator();
-		// for(Integer anIndex = 0; anIterator.hasNext(); anIndex++) {
-		// 	Node aNode = anIterator.next();
-		// 	aNode.setStatus(Constants.UnVisited);
-		// 	aNode.setLocation(new Point(0, anIndex * yValue));
-		// }
-
 		Integer counter = 0;
 		for(Node aNode: this.nodes){
-			// Integer height = (aNode.getExtent().height * counter++);
+			Integer height = aNode.getExtent().height + Constants.Margin.y + Constants.Interval.y;
 			aNode.setStatus(Constants.UnVisited);
-			aNode.setLocation(new Point(0, 15*counter++));
+			aNode.setLocation(new Point(0, height*counter++));
 		}
-		// BiConsumer<Node, Integer> aBiConsumer = (Node aNode, Integer anIndex) -> {
-		// 	Integer height = aNode.getHeight() * anIndex;
-		// 	aNode.setStatus(Constants.UnVisited);
-		// 	aNode.setLocation(new Point(0, height));
-		// };
-		// Integer index = 0;
-		// this.nodes.forEachWithIndex(aBiConsumer);
 
 		Point aPoint = new Point(0, 0);
 		ArrayList<Node> rootNodes = this.rootNodes();
@@ -147,9 +130,7 @@ public class Forest extends Object {
 		Integer y = height;
 		Integer top = height;
 
-		Iterator<Node> anIterator = subNodes.iterator();
-		while (anIterator.hasNext()) {
-			Node subNode = anIterator.next();
+		for (Node subNode: subNodes) {
 			if (subNode.getStatus() == Constants.UnVisited) {
 				extent = this.arrange(subNode, new Point(x, y), aModel);
 				Integer h = y + subNode.getExtent().height;
@@ -179,12 +160,9 @@ public class Forest extends Object {
 	 * 
 	 */
 	public Rectangle bounds() {
-		if (this.bounds == null) {
-			this. bounds = new Rectangle(0, 0, 0, 0);
-			for (Integer index = 0; index < this.nodes.size(); index++) {
-				Node aNode = this.nodes.get(index);
-				this.bounds.add(aNode.getBounds());
-			}
+		if (this.bounds == null) this.bounds = new Rectangle();
+		for(Node aNode: this.nodes){
+			this.bounds.add(aNode.getBounds());
 		}
 		return this.bounds;
 	}
@@ -195,11 +173,11 @@ public class Forest extends Object {
 	 * 
 	 */
 	public void draw(Graphics aGraphics) {
-		for(Node aNode: this.nodes){
-			aNode.draw(aGraphics);
-		}
 		for(Branch aBranch: this.branches){
 			aBranch.draw(aGraphics);
+		}
+		for(Node aNode: this.nodes){
+			aNode.draw(aGraphics);
 		}
 	}
 
