@@ -312,7 +312,7 @@ th {
   </tbody>
 </table>
 <div class="belt">
-<h3><a name="Example" href="../Program/index.html#Mpde">Example（メインクラス）</a></h3>
+<h3><a name="Node" href="../Program/index.html#Node">Node</a></h3>
 </div>
 <table summary="table">
   <tbody>
@@ -425,23 +425,58 @@ th {
           </tr>
           <tr>
             <td class="left-padding"><code>setExtent(Dimension aDimension)</code></td>
-            <td class="left-padding"><code>Dimension</code></td>
+            <td class="left-padding"><code>void</code></td>
             <td class="left-padding"><code>public</code></td>
             <td class="left-padding">ノード（節）の大きさを応答するメソッドです。</td>
             <td class="left-padding">なし</td>
           </tr>
           <tr>
-            <td class="left-padding"><code>setLocation(Integer anInteger)</code></td>
+            <td class="left-padding"><code>setLocation(Point aPoint)</code></td>
             <td class="left-padding"><code>void</code></td>
             <td class="left-padding"><code>public</code></td>
-            <td class="left-padding">ノード（節）の位置を応答するメソッドです。</td>
+            <td class="left-padding">ノード（節）の位置を設定するメソッドです。</td>
             <td class="left-padding">なし</td>
           </tr>
           <tr>
             <td class="left-padding"><code>setName(String aString)</code></td>
             <td class="left-padding"><code>void</code></td>
             <td class="left-padding"><code>public</code></td>
-            <td class="left-padding">ノード（節）の位置を応答するメソッドです。</td>
+            <td class="left-padding">ノード（節）の名前を設定するメソッドです。</td>
+            <td class="left-padding">なし</td>
+          </tr>
+          <tr>
+            <td class="left-padding"><code>setStatus(Integer anInteger)</code></td>
+            <td class="left-padding"><code>void</code></td>
+            <td class="left-padding"><code>public</code></td>
+            <td class="left-padding">ノード（節）の状態を設定するメソッドです。</td>
+            <td class="left-padding">なし</td>
+          </tr>
+          <tr>
+            <td class="left-padding"><code>stringHeight(String string)</code></td>
+            <td class="left-padding"><code>int</code></td>
+            <td class="left-padding"><code>public</code></td>
+            <td class="left-padding">文字列の高さを応答するメソッドです。</td>
+            <td class="left-padding">なし</td>
+          </tr>
+          <tr>
+            <td class="left-padding"><code>stringWidth(String string)</code></td>
+            <td class="left-padding"><code>int</code></td>
+            <td class="left-padding"><code>public</code></td>
+            <td class="left-padding">文字列の幅を応答するメソッドです。</td>
+            <td class="left-padding">なし</td>
+          </tr>
+          <tr>
+            <td class="left-padding"><code>compareTo(Node aNode)</code></td>
+            <td class="left-padding"><code>int</code></td>
+            <td class="left-padding"><code>public</code></td>
+            <td class="left-padding">自信を比較するためのメソッドです。</td>
+            <td class="left-padding">なし</td>
+          </tr>
+          <tr>
+            <td class="left-padding"><code>toString()</code></td>
+            <td class="left-padding"><code>String</code></td>
+            <td class="left-padding"><code>public</code></td>
+            <td class="left-padding">自分自身を文字列に変換するメソッドです。</td>
             <td class="left-padding">なし</td>
           </tr>
         </tbody>
@@ -450,10 +485,6 @@ th {
     </tr>
   </tbody>
 </table>
-<ul>
-  <li><a href="#Example">ForestModel</a>
-  <li>…
-</ul>
 <div class="belt">
 <h3><a name="Example" href="../Program/index.html#ForestModel">ForestModel</a></h3>
 </div>
@@ -558,10 +589,6 @@ th {
     </tr>
   </tbody>
 </table>
-<ul>
-  <li><a href="">View</a>
-  <li>…
-</ul>
 <div class="belt">
 <h3><a name="Example" href="../Program/index.html#View">ForestView</a></h3>
 </div>
@@ -631,10 +658,6 @@ th {
     </tr>
   </tbody>
 </table>
-<ul>
-  <li><a href="#Controller">Example</a>（メインクラス）
-  <li>…
-</ul>
 <div class="belt">
 <h3><a name="Controller" href="../Program/index.html#Controller">ForestController</a></h3>
 </div>
