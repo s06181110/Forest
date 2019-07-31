@@ -3,19 +3,17 @@ package forest;
 import mvc.Model;
 import mvc.View;
 
-import java.awt.Graphics;
-import java.awt.Point;
+import java.awt.AlphaComposite;
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
-
 import java.util.ArrayList;
 
 
@@ -71,15 +69,21 @@ public class ForestModel extends Model {
 	 *  自分自身が変化したことを依存物たちに放送（updateを依頼）するメソッドです。
 	 * 
 	 */
+	@Override
 	public void changed() {
 		Rectangle aRectangle = this.forest.bounds();
-		this.picture(new BufferedImage(aRectangle.width, aRectangle.height, BufferedImage.TYPE_INT_RGB));
+		BufferedImage anImage = new BufferedImage(aRectangle.width, aRectangle.height, BufferedImage.TYPE_INT_RGB);
+		this.picture(anImage);
 
-		Graphics aGraphics = this.picture().createGraphics();
+		Graphics2D aGraphics = this.picture().createGraphics();
+		// レンダリングを綺麗にする設定を施す
+		aGraphics.setComposite(AlphaComposite.Src);
+		aGraphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+		aGraphics.setRenderingHint(RenderingHints.KEY_RENDERING,RenderingHints.VALUE_RENDER_QUALITY);
+		aGraphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
 
 		aGraphics.setColor(Constants.BackgroundColor);
 		aGraphics.fillRect(0, 0, aRectangle.width, aRectangle.height);
-
 		this.forest.draw(aGraphics);
 
 		for(View aView: this.dependents){
@@ -105,9 +109,6 @@ public class ForestModel extends Model {
 	 */
 	protected void read(File aFile) {
 		try {
-			// FileInputStream inputStream = new FileInputStream(aFile);
-			// InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
-			// BufferedReader inputReader = new BufferedReader(inputStreamReader);
 			BufferedReader inputReader = new BufferedReader(new FileReader(aFile));
 			String str;
 			Integer previousValue = null;
