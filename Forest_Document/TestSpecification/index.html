@@ -248,15 +248,15 @@ th {
 </div>
 <hr>
 <h2>ソフトウェア工学II「樹状整列」テスト仕様書</h2>
-<div class="belt">
-<h3><a name="KanseiSaseteKudasai">完成させてください</a></h3>
-</div>
 <ul>
-  <li><a href="#Example">Example</a>（メインクラス）
-  <li>…
+  <li><a href="#Example">Example</a>（メインクラス）</li>
+  <li><a href="#Node">Node</a></li>
+  <li><a href="#ForestModel">ForestModel</a></li>
+  <li><a href="#ForestView">ForestView</a></li>
+  <li><a href="#ForestController">ForestController</a></li>
 </ul>
 <div class="belt">
-<h3><a name="Example" href="../Program/index.html#Example">Example（メインクラス）</a></h3>
+<h3><a name="Example" href="https://github.com/s06181110/Forest/blob/master/Forest_Program/forest/Example.java">Example（メインクラス）</a></h3>
 </div>
 <table summary="table">
   <tbody>
@@ -298,12 +298,11 @@ th {
             <th class="left-padding" abbr="5">テスト結果</th>
           </tr>
           <tr>
-            <td class="left-padding"><code><a href="../Program/index.html#Example-main">main(String[] arguments)</a></code></td>
+            <td class="left-padding"><code>main(String[] arguments)</code></td>
             <td class="left-padding"><code>void</code></td>
             <td class="left-padding"><code>public static</code></td>
-            <td class="left-padding">コマンドラインを引数として受け取り、…、…。</td>
-            <td class="left-padding">バグ（2010年7月21日）</td>
-            <td class="left-padding">良好（2010年7月21日）</td>
+            <td class="left-padding">第1引数で樹状整列データファイルを受け取って樹状整列を実行します。</td>
+            <td class="left-padding">なし</td>
           </tr>
         </tbody>
       </table>
@@ -312,7 +311,7 @@ th {
   </tbody>
 </table>
 <div class="belt">
-<h3><a name="Node" href="../Program/index.html#Node">Node</a></h3>
+<h3><a name="Node" href="https://github.com/s06181110/Forest/blob/master/Forest_Program/forest/Node.java">Node</a></h3>
 </div>
 <table summary="table">
   <tbody>
@@ -486,7 +485,7 @@ th {
   </tbody>
 </table>
 <div class="belt">
-<h3><a name="Example" href="../Program/index.html#ForestModel">ForestModel</a></h3>
+<h3><a name="Example" href="https://github.com/s06181110/Forest/blob/master/Forest_Program/forest/ForestModel.java">ForestModel</a></h3>
 </div>
 <table summary="table">
   <tbody>
@@ -590,7 +589,7 @@ th {
   </tbody>
 </table>
 <div class="belt">
-<h3><a name="Example" href="../Program/index.html#View">ForestView</a></h3>
+<h3><a name="Example" href="https://github.com/s06181110/Forest/blob/master/Forest_Program/forest/ForestView.java">ForestView</a></h3>
 </div>
 <table summary="table">
   <tbody>
@@ -632,21 +631,21 @@ th {
             <th class="left-padding" abbr="5">テスト結果</th>
           </tr>
           <tr>
-            <td class="left-padding"><code><a href="../Program/index.html#Example-main">ForestView(ForestModel aModel)</a></code></td>
+            <td class="left-padding"><code>ForestView(ForestModel aModel)</code></td>
             <td class="left-padding"><code>void</code></td>
             <td class="left-padding"><code>public</code></td>
             <td class="left-padding">インスタンスを生成して初期化する。</td>
             <td class="left-padding"></td>
           </tr>
           <tr>
-            <td class="left-padding"><code><a href="../Program/index.html#Example-main">paintComponent(Graphics aGraphics)</a></code></td>
+            <td class="left-padding"><code>paintComponent(Graphics aGraphics)</code></td>
             <td class="left-padding"><code>void</code></td>
             <td class="left-padding"><code>public</code></td>
             <td class="left-padding">描画が必要になった時に動作する。</td>
             <td class="left-padding">なし</td>
           </tr>
           <tr>
-            <td class="left-padding"><code><a href="../Program/index.html#Example-main">whichOfNodes(Point aPoint)</a></code></td>
+            <td class="left-padding"><code>whichOfNodes(Point aPoint)</code></td>
             <td class="left-padding"><code>Node</code></td>
             <td class="left-padding"><code>public</code></td>
             <td class="left-padding">指定された座標にノードが存在するかを調べる。</td>
@@ -659,7 +658,7 @@ th {
   </tbody>
 </table>
 <div class="belt">
-<h3><a name="Controller" href="../Program/index.html#Controller">ForestController</a></h3>
+<h3><a name="Controller" href="https://github.com/s06181110/Forest/blob/master/Forest_Program/forest/ForestController.java">ForestController</a></h3>
 </div>
 <table summary="table">
   <tbody>
@@ -701,14 +700,14 @@ th {
             <th class="left-padding" abbr="5">テスト結果</th>
           </tr>
           <tr>
-            <td class="left-padding"><code><a href="../Program/index.html#Example-main">ForestController()</a></code></td>
+            <td class="left-padding"><code>ForestController()</code></td>
             <td class="left-padding"><code>void</code></td>
             <td class="left-padding"><code>public</code></td>
             <td class="left-padding">このクラスのインスタンスを生成するコンストラクタです。</td>
             <td class="left-padding">なし</td>
           </tr>
           <tr>
-            <td class="left-padding"><code><a href="../Program/index.html#Example-main">mouseClicked(MonseEvent aMouseEvent)</a></code></td>
+            <td class="left-padding"><code>mouseClicked(MonseEvent aMouseEvent)</code></td>
             <td class="left-padding"><code>void</code></td>
             <td class="left-padding"><code>public</code></td>
             <td class="left-padding">マウスのボタンをクリックした時に動作するメソッドです。</td>
