@@ -1,8 +1,10 @@
 package forest;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.awt.Rectangle;
 import java.awt.Point;
+import java.awt.Dimension;
 import java.awt.Graphics;
 
 /**
@@ -34,7 +36,10 @@ public class Forest extends Object {
 	 * 
 	 */
 	public Forest() {
-
+		this.nodes = new ArrayList<Node>();
+		this.branches = new ArrayList<Branch>();
+		this.bounds = null;
+		return;
 	}
 
 	/**
@@ -43,7 +48,9 @@ public class Forest extends Object {
 	 * 
 	 */
 	public void addBranch(Branch aBranch) {
-
+		this.branches.add(aBranch);
+		this.flushBounds();
+		return;
 	}
 
 	/**
@@ -52,7 +59,9 @@ public class Forest extends Object {
 	 * 
 	 */
 	public void addNode(Node aNode) {
-
+		this.nodes.add(aNode);
+		this.flushBounds();
+		return;
 	}
 
 	/**
@@ -60,7 +69,8 @@ public class Forest extends Object {
 	 * 
 	 */
 	public void arrange() {
-
+		this.arrange(null);
+		return;
 	}
 
 	/**
@@ -69,6 +79,23 @@ public class Forest extends Object {
 	 * 
 	 */
 	public void arrange(ForestModel aModel) {
+		Integer counter = 0;
+		for(Node aNode: this.nodes){
+			Integer height = aNode.getExtent().height + Constants.Margin.y + Constants.Interval.y;
+			aNode.setStatus(Constants.UnVisited);
+			aNode.setLocation(new Point(0, height*counter++));
+		}
+
+		Point aPoint = new Point(0, 0);
+		ArrayList<Node> rootNodes = this.rootNodes();
+		for(Node aNode: rootNodes){
+			Dimension aDimension = this.arrange(aNode, aPoint, aModel);
+			aPoint = new Point(0, aDimension.height  + Constants.Interval.y);
+		}
+
+		this.flushBounds();
+
+		return;
 
 	}
 
@@ -80,8 +107,49 @@ public class Forest extends Object {
 	 *  @return 樹状整列に必要だった大きさ（幅と高さ）
 	 * 
 	 */
-	protected Point arrange(Node aNode, Point aPoint, ForestModel aModel) {
-		return null;
+	protected Dimension arrange(Node aNode, Point aPoint, ForestModel aModel) {
+		aNode.setStatus(Constants.Visited);
+		aNode.setLocation(aPoint);
+		this.propagate(aModel);
+
+		Dimension extent = aNode.getExtent();
+		ArrayList<Node> subNodes = this.subNodes(aNode);
+		if (subNodes.isEmpty()) {
+			Integer width = aPoint.x + extent.width;
+			Integer height = aPoint.y + extent.height;
+			extent = new Dimension(width, height);
+
+			return extent;
+		}
+
+		Integer width = aPoint.x + extent.width;
+		Integer height = aPoint.y;
+		Integer x = width + Constants.Interval.x;
+		Integer y = height;
+		Integer top = height;
+
+		for (Node subNode: subNodes) {
+			if (subNode.getStatus() == Constants.UnVisited) {
+				extent = this.arrange(subNode, new Point(x, y), aModel);
+				Integer h = y + subNode.getExtent().height;
+				y = extent.height > h ? extent.height : h;
+				width = extent.width> width ? extent.width : width;
+				height = extent.height > height ? extent.height : height;
+				y = y + Constants.Interval.y;
+			}
+		}
+
+		y = y - Constants.Interval.y;
+		Integer h = aNode.getExtent().height;
+		if (y > (aPoint.y + h)) {
+			y = top + ((y - top - h) / 2);
+			aNode.setLocation(new Point(aPoint.x, y));
+			this.propagate(aModel);
+		}
+		height = height > h ? height : h;
+		extent = new Dimension(width, height);
+
+		return extent;
 	}
 
 	/**
@@ -90,7 +158,10 @@ public class Forest extends Object {
 	 * 
 	 */
 	public Rectangle bounds() {
-		return null;
+		if (this.bounds == null) this.bounds = new Rectangle();
+		this.nodes.forEach(aNode -> this.bounds.add(aNode.getBounds()));
+
+		return this.bounds;
 	}
 
 	/**
@@ -99,7 +170,8 @@ public class Forest extends Object {
 	 * 
 	 */
 	public void draw(Graphics aGraphics) {
-
+		this.branches.forEach( aBranch -> aBranch.draw(aGraphics) );
+		this.nodes.forEach( aNode -> aNode.draw(aGraphics) );
 	}
 
 	/**
@@ -107,7 +179,7 @@ public class Forest extends Object {
 	 * 
 	 */
 	public void flushBounds() {
-
+		this.bounds = null;
 	}
 
 	/**
@@ -116,7 +188,16 @@ public class Forest extends Object {
 	 * 
 	 */
 	protected void propagate(ForestModel aModel) {
-
+		if(!(aModel == null)) {
+			try {
+				aModel.changed();
+				Thread.sleep(Constants.SleepTick);
+			} catch (Exception anException) { anException.printStackTrace(); }
+			this.flushBounds();
+			aModel.changed();
+		}
+		
+		return;
 	}
 
 	/**
@@ -125,7 +206,16 @@ public class Forest extends Object {
 	 * 
 	 */
 	public ArrayList<Node> rootNodes() {
-		return null;
+		// ルートノード以外の集合を集める
+		ArrayList<Node> endList = new ArrayList<>();
+		this.branches.forEach(aBranch -> endList.add(aBranch.end()));
+
+		ArrayList<Node> roots = new ArrayList<>();
+		this.nodes.stream()
+			.filter(aNode -> !endList.contains(aNode))
+			.forEach(roots::add);
+
+		return roots;
 	}
 
 	/**
@@ -135,7 +225,8 @@ public class Forest extends Object {
 	 * 
 	 */
 	protected ArrayList<Node> sortNodes(ArrayList<Node> nodeCollection) {
-		return null;
+		Collections.sort(nodeCollection);
+		return nodeCollection;
 	}
 
 	/**
@@ -145,7 +236,12 @@ public class Forest extends Object {
 	 * 
 	 */
 	public ArrayList<Node> subNodes(Node aNode) {
-		return null;
+		ArrayList<Node> nodeList = new ArrayList<>();
+		for(Branch aBranch: this.branches){
+			if(aBranch.start().equals(aNode)) nodeList.add(aBranch.end());
+		}
+
+		return nodeList;
 	}
 
 	/**
@@ -155,7 +251,11 @@ public class Forest extends Object {
 	 * 
 	 */
 	public ArrayList<Node> superNodes(Node aNode) {
-		return null;
+		ArrayList<Node> nodeList = new ArrayList<Node>();
+		for(Branch aBranch: this.branches){
+			if(aBranch.end().equals(aNode)) nodeList.add(aBranch.start());
+		}
+		return nodeList;
 	}
 
 	/**
@@ -164,6 +264,17 @@ public class Forest extends Object {
 	 * 
 	 */
 	public String toString() {
+		Class<?> aClass = this.getClass();
+
+		StringBuffer aBuffer = new StringBuffer();
+		aBuffer.append(aClass.getName());
+		aBuffer.append("[bounds=");
+		aBuffer.append(this.bounds);
+		aBuffer.append(", nodes=");
+		aBuffer.append(this.nodes);
+		aBuffer.append(", branches=");
+		aBuffer.append(this.branches);
+		aBuffer.append("]");
 		return null;
 	}
 
@@ -174,6 +285,10 @@ public class Forest extends Object {
 	 * 
 	 */
 	public Node whichOfNodes(Point aPoint) {
+		for(Node aNode: this.nodes){
+			Rectangle aRectangle = aNode.getBounds();
+			if(aRectangle.contains(aPoint)) return aNode;
+		}
 		return null;
 	}
 

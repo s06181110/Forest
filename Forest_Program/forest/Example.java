@@ -38,8 +38,6 @@ public class Example extends Object
 			System.exit(1);
 		}
 
-		/**********
-
 		 // MVCを作成する。
 		ForestModel aModel = new ForestModel(aFile);
 		ForestView aView = new ForestView(aModel);
@@ -55,8 +53,6 @@ public class Example extends Object
 
 		// 樹状整列のアニメーションを行う。
 		aModel.animate();
-
-		**********/
 
 		return;
 	}

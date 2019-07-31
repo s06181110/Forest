@@ -1,6 +1,8 @@
 package forest;
 
 import mvc.Controller;
+
+import java.awt.Point;
 import java.awt.event.MouseEvent;
 
 /**
@@ -12,9 +14,11 @@ public class ForestController extends Controller {
 	/**
 	 *  このクラスのインスタンスを生成するコンストラクタです。
 	 * 
-	 */
-	public ForestController() {
-
+	 */  
+	public ForestController()
+	{
+		super();
+		return;
 	}
 
 	/**
@@ -23,8 +27,12 @@ public class ForestController extends Controller {
 	 *  @param aMouseEvent マウスイベント
 	 * 
 	 */
+	@Override
 	public void mouseClicked(MouseEvent aMouseEvent) {
-
+		Point aPoint = aMouseEvent.getPoint();
+		ForestView aView = (ForestView)super.view;
+		Node aNode = aView.whichOfNodes(aPoint);
+		if(aNode != null) System.out.println(aNode.getName());
+		return;
 	}
-
 }

@@ -1,7 +1,9 @@
 package forest;
 
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Point;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
@@ -10,7 +12,7 @@ import java.awt.Rectangle;
  * 
  */
 @SuppressWarnings("serial")
-public class Node extends Component {
+public class Node extends Component implements Comparable<Node>{
 
 	/**
 	 *  ノード名：ラベル文字列を記憶するフィールドです。
@@ -28,7 +30,7 @@ public class Node extends Component {
 	 *  ノードの大きさ（幅と高さ）を記憶するフィールドです。
 	 * 
 	 */
-	private Point extent;
+	private Dimension extent;
 
 	/**
 	 *  樹状整列する際のノードの状態を記憶するフィールドです。
@@ -42,7 +44,14 @@ public class Node extends Component {
 	 * 
 	 */
 	public Node(String aString) {
-
+		super();
+		this.setName(aString);
+		this.setLocation(new Point());
+		Integer width = this.stringWidth(this.name) + (2*Constants.Margin.x);
+		Integer height = this.stringHeight(this.name) + (2*Constants.Margin.y);
+		this.setExtent(new Dimension(width, height));
+		this.setStatus(Constants.UnKnown);
+		return;
 	}
 
 	/**
@@ -51,7 +60,12 @@ public class Node extends Component {
 	 * 
 	 */
 	public void draw(Graphics aGraphics) {
-
+		aGraphics.setColor(Constants.ForegroundColor);
+		aGraphics.drawRect(this.location.x, this.location.y, this.extent.width-1, this.extent.height-1);
+		aGraphics.setFont(Constants.DefaultFont);
+		FontMetrics aFontMetrics = aGraphics.getFontMetrics();
+		aGraphics.drawString(this.name, this.location.x+Constants.Margin.x, this.location.y + Constants.Margin.y + aFontMetrics.getAscent());
+		return;
 	}
 
 	/**
@@ -60,7 +74,8 @@ public class Node extends Component {
 	 * 
 	 */
 	public Rectangle getBounds() {
-		return null;
+		Rectangle aRectangle = new Rectangle(this.location, this.extent);
+		return aRectangle;
 	}
 
 	/**
@@ -68,8 +83,8 @@ public class Node extends Component {
 	 *  @return ノード（節）の大きさ（幅と高さ）
 	 * 
 	 */
-	public Point getExtent() {
-		return null;
+	public Dimension getExtent() {
+		return this.extent;
 	}
 
 	/**
@@ -78,7 +93,7 @@ public class Node extends Component {
 	 * 
 	 */
 	public Point getLocation() {
-		return null;
+		return this.location;
 	}
 
 	/**
@@ -87,7 +102,7 @@ public class Node extends Component {
 	 * 
 	 */
 	public String getName() {
-		return null;
+		return this.name;
 	}
 
 	/**
@@ -96,7 +111,7 @@ public class Node extends Component {
 	 * 
 	 */
 	public Integer getStatus() {
-		return null;
+		return this.status;
 	}
 
 	/**
@@ -104,8 +119,9 @@ public class Node extends Component {
 	 *  @param aPoint ノードの大きさ（幅と高さ）
 	 * 
 	 */
-	public void setExtent(Point aPoint) {
-
+	public void setExtent(Dimension aDimension) {
+		this.extent = aDimension;
+		return;
 	}
 
 	/**
@@ -114,7 +130,8 @@ public class Node extends Component {
 	 * 
 	 */
 	public void setLocation(Point aPoint) {
-
+		this.location = aPoint;
+		return;
 	}
 
 	/**
@@ -123,7 +140,8 @@ public class Node extends Component {
 	 * 
 	 */
 	public void setName(String aString) {
-
+		this.name = aString;
+		return;
 	}
 
 	/**
@@ -132,7 +150,8 @@ public class Node extends Component {
 	 * 
 	 */
 	public void setStatus(Integer anInteger) {
-
+		this.status = anInteger;
+		return;
 	}
 
 	/**
@@ -142,7 +161,8 @@ public class Node extends Component {
 	 * 
 	 */
 	protected int stringHeight(String string) {
-		return 0;
+		FontMetrics aFontMetrics = this.getFontMetrics(Constants.DefaultFont);
+		return aFontMetrics.getHeight();
 	}
 
 	/**
@@ -152,7 +172,13 @@ public class Node extends Component {
 	 * 
 	 */
 	protected int stringWidth(String string) {
-		return 0;
+		FontMetrics aFontMetrics = this.getFontMetrics(Constants.DefaultFont);
+		return aFontMetrics.stringWidth(string);
+	}
+
+	@Override
+	public int compareTo(Node aNode) {
+		return this.name.compareTo(aNode.name);
 	}
 
 	/**
@@ -161,7 +187,20 @@ public class Node extends Component {
 	 * 
 	 */
 	public String toString() {
-		return null;
+		StringBuffer aBuffer = new StringBuffer();
+		Class<?> aClass = this.getClass();
+		aBuffer.append(aClass.getName());
+		aBuffer.append("[name=");
+		aBuffer.append(this.name);
+		aBuffer.append(",location=");
+		aBuffer.append(this.location);
+		aBuffer.append(",extent=");
+		aBuffer.append(this.extent);
+		aBuffer.append(",status=");
+		aBuffer.append(this.status);
+		aBuffer.append("]");
+		return aBuffer.toString();
 	}
+
 
 }

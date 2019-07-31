@@ -1,6 +1,8 @@
 package forest;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Point;
 
 /**
  *  樹状整列におけるブランチ（枝）を担うクラスになります。
@@ -27,7 +29,8 @@ public class Branch extends Object {
 	 * 
 	 */
 	public Branch(Node from, Node to) {
-
+		this.start = from;
+		this.end = to;
 	}
 
 	/**
@@ -36,7 +39,18 @@ public class Branch extends Object {
 	 * 
 	 */
 	public void draw(Graphics aGraphics) {
+		Point location = this.start.getLocation();
+		Dimension extent = this.start.getExtent();
+		Integer x1 = location.x + extent.width;
+		Integer y1 = location.y + (extent.height / 2);
 
+		location = this.end.getLocation();
+		extent = this.end.getExtent();
+		Integer x2 = location.x;
+		Integer y2 = location.y + (extent.height / 2);
+		aGraphics.setColor(Constants.ForegroundColor);
+		aGraphics.drawLine(x1, y1, x2, y2);
+		return;
 	}
 
 	/**
@@ -45,7 +59,7 @@ public class Branch extends Object {
 	 * 
 	 */
 	public Node end() {
-		return null;
+		return this.end;
 	}
 
 	/**
@@ -54,7 +68,7 @@ public class Branch extends Object {
 	 * 
 	 */
 	public Node start() {
-		return null;
+		return this.start;
 	}
 
 	/**
@@ -63,7 +77,15 @@ public class Branch extends Object {
 	 * 
 	 */
 	public String toString() {
-		return null;
+		StringBuffer aBuffer = new StringBuffer();
+		Class<?> aClass = this.getClass();
+		aBuffer.append(aClass.getName());
+		aBuffer.append("[start=");
+		aBuffer.append(this.start.getName());
+		aBuffer.append(",end=");
+		aBuffer.append(this.end.getName());
+		aBuffer.append("]");
+		return aBuffer.toString();
 	}
 
 }
