@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"forest"},{"l":"すべてのパッケージ","url":"allpackages-index.html"}]
