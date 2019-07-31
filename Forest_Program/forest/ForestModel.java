@@ -167,7 +167,7 @@ public class ForestModel extends Model {
 	 */
 	public Node root() {
 		ArrayList<Node> roots = this.roots();
-		return roots.size() > 0 ? roots.get(0) : null;
+		return roots.isEmpty() ? null : roots.get(0);
 	}
 
 	/**
